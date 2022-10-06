@@ -1,0 +1,90 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const content = [
+  "Designing Engineering",
+  "br",
+  "",
+  "&&",
+  "Information Designing",
+  "hr",
+  "Algorithmic UI",
+  "&&",
+  "br",
+  "Markup",
+  "≕ l♥ve",
+];
+---
+
+<Layout title="Home" pageOrder={0}>
+  <h1>
+    {
+      content.map((row, i) =>
+        row === "hr" ? (
+          <Fragment set:html={`<hr />`} />
+        ) : row === "br" ? (
+          <Fragment set:html={"<br />"} />
+        ) : row === "&&" ? (
+          <>
+            <div class="overflow" style={`--i:${i}`}>
+              <strong>{row}</strong>
+            </div>
+          </>
+        ) : (
+          <div class="overflow" style={`--i:${i}`}>
+            <span>{row}</span>
+          </div>
+        )
+      )
+    }
+    <!-- <div class="overflow"><span>Designing Engineering</span></div>
+    <br />
+    <div class="overflow"><strong>&&</strong></div>
+    <div class="overflow"><span> Information Designing</span></div>
+    <br />
+    <hr />
+    <div class="overflow"><span> Algorithmic</span></div>
+    <div class="overflow"><strong>&&</strong></div>
+    <br />
+    <div class="overflow"><span>Markup</span></div>
+    <div class="overflow"><span>≕ l♥ve</span></div> -->
+  </h1>
+</Layout>
+<style>
+  @keyframes enter {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  h1 {
+    width: max-content;
+    grid-column: 2/8;
+    grid-row: 2;
+  }
+  span,
+  strong {
+    display: inline-block;
+    animation-name: enter;
+    animation-duration: 400ms;
+    animation-fill-mode: both;
+    animation-delay: calc(200ms + 90ms * var(--i));
+    /* animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1.5); */
+    animation-timing-function: cubic-bezier(1, 0.22, 0, 1.42);
+  }
+  .overflow {
+    padding-top: 4px;
+    display: inline-block;
+    line-height: 1;
+    overflow: clip;
+  }
+  :global(hr) {
+    width: 20%;
+    border-color: hsl(var(--col-prim));
+    border-style: solid;
+    border-width: var(--space-m);
+    margin-block: var(--space-m);
+  }
+</style>
