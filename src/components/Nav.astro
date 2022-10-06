@@ -21,7 +21,7 @@ const { links } = Astro.props as Props;
           data-current={Astro.url.pathname === link.url ? "true" : null}
         >
           <a href={link.url}>
-            <Icons width={24} height={24} type={link.name.toLowerCase()} />
+            <Icons width={20} height={20} type={link.name.toLowerCase()} />
           </a>
         </li>
       ))
@@ -52,11 +52,11 @@ const { links } = Astro.props as Props;
     background-color: hsl(var(--col-wht) / var(--o));
     opacity: 0.75;
 
-    border-radius: var(--space-s);
-    padding: var(--space-s);
+    border-radius: var(--space-3xs);
+    padding: var(--space-3xs);
     align-items: center;
 
-    box-shadow: 0 0 var(--space-l) hsl(var(--col-blk) / 0.1);
+    box-shadow: 0 0 var(--space-s) hsl(var(--col-blk) / 0.1);
   }
   m-nav:hover {
     transition-delay: 100ms;
@@ -65,11 +65,11 @@ const { links } = Astro.props as Props;
   }
   ul {
     display: flex;
-    gap: var(--space-m);
+    gap: var(--space-2xs);
     align-items: center;
   }
   li {
-    padding: var(--space-xs);
+    padding: var(--space-3xs);
     position: relative;
     transition-property: color;
     transition-duration: 200ms;
@@ -89,7 +89,7 @@ const { links } = Astro.props as Props;
     transform-origin: bottom;
     transform: scaleY(0);
     background-color: hsl(var(--col-blk));
-    border-radius: var(--space-xs);
+    border-radius: var(--space-3xs);
   }
   :global(html.is-fetching) li::after {
     transition-duration: 2500ms;

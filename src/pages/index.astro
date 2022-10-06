@@ -7,7 +7,7 @@ const content = [
   "",
   "&&",
   "Information Designing",
-  "hr",
+  "br",
   "Algorithmic UI",
   "&&",
   "br",
@@ -17,7 +17,13 @@ const content = [
 ---
 
 <Layout title="Home" pageOrder={0}>
-  <h1>
+  <svg width="100%" height="100%" viewBox="0 0 256 256">
+    <g transform="translate(128 128)">
+      <circle fill="none" stroke-width="8" stroke="currentColor" r="64"
+      ></circle>
+    </g>
+  </svg>
+  <h2>
     {
       content.map((row, i) =>
         row === "hr" ? (
@@ -37,18 +43,7 @@ const content = [
         )
       )
     }
-    <!-- <div class="overflow"><span>Designing Engineering</span></div>
-    <br />
-    <div class="overflow"><strong>&&</strong></div>
-    <div class="overflow"><span> Information Designing</span></div>
-    <br />
-    <hr />
-    <div class="overflow"><span> Algorithmic</span></div>
-    <div class="overflow"><strong>&&</strong></div>
-    <br />
-    <div class="overflow"><span>Markup</span></div>
-    <div class="overflow"><span>≕ l♥ve</span></div> -->
-  </h1>
+  </h2>
 </Layout>
 <style>
   @keyframes enter {
@@ -59,10 +54,13 @@ const content = [
       transform: translateY(0);
     }
   }
-  h1 {
-    width: max-content;
-    grid-column: 2/8;
-    grid-row: 2;
+  h2 {
+    line-height: 1.3;
+    text-align: center;
+    grid-row: -3;
+    justify-self: center;
+    grid-column-start: 1;
+    grid-column-end: 13;
   }
   span,
   strong {
@@ -82,9 +80,32 @@ const content = [
   }
   :global(hr) {
     width: 20%;
+    margin-inline: auto;
     border-color: hsl(var(--col-prim));
     border-style: solid;
     border-width: var(--space-m);
     margin-block: var(--space-m);
+  }
+
+  svg {
+    grid-row: 1 / 5;
+    overflow: visible;
+  }
+
+  @media (min-width: 640px) {
+    h2 {
+      width: auto;
+      justify-self: start;
+      text-align: left;
+      grid-row: 2;
+      grid-column-start: 2;
+    }
+    :global(hr) {
+      margin-inline: auto;
+    }
+    svg {
+      grid-column: -7 / -1;
+      grid-row: 3/-1;
+    }
   }
 </style>
