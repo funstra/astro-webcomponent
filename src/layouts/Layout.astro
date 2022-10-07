@@ -17,6 +17,10 @@ const links: link[] = [
     url: "/",
   },
   {
+    name: "Portal",
+    url: "/portal",
+  },
+  {
     name: "Work",
     url: "/work/",
   },
@@ -97,5 +101,6 @@ const { title, pageOrder } = Astro.props as Props;
   }
   main > :global(*) {
     grid-column: 1/-1;
+    grid-row: 1/-1;
   }
 </style>

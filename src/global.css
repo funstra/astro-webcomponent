@@ -73,7 +73,7 @@
   --space-l-3xl: clamp(2rem, calc(-0.94rem + 12.24vw), 7.88rem);
 }
 
-ul {
+li {
   list-style: none;
 }
 

@@ -1,0 +1,25 @@
+---
+export interface Props {
+  title: string;
+  link?: string;
+}
+const { title, link } = Astro.props as Props;
+---
+
+<article>
+  <h2>{title}</h2>
+  <p>
+    <slot />
+  </p>
+  {link && <a href={link}>Read more!</a>}
+</article>
+
+<style>
+  p {
+    color: hsl(var(--col-ternary));
+  }
+  article a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+</style>
