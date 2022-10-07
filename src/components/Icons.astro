@@ -2,7 +2,7 @@
 interface Props {
   width: number;
   height: number;
-  type: "home" | "work" | "writing";
+  type: "home" | "work" | "writing" | string;
 }
 const { width, height, type } = Astro.props as Props;
 ---
@@ -14,23 +14,26 @@ const { width, height, type } = Astro.props as Props;
   viewBox="0 0 28 28"
   fill="none"
   stroke="currentColor"
-  stroke-width="4"
   stroke-linecap="round"
   stroke-linejoin="round"
 >
-  <g transform="scale(0.85)" transform-origin="center">
+  <g
+    transform="scale(0.5)"
+    vector-effect="non-scaling-stroke"
+    transform-origin="center"
+  >
     {
       type == "home" ? (
         <g>
-          <rect width="100%" height="100%" />
+          <rect width="100%" height="100%" vector-effect="non-scaling-stroke" />
         </g>
       ) : type == "work" ? (
         <g transform="translate(0 -1)">
-          <path d="M0,28 l28,0 l-14,-28 z" />
+          <path d="M0,28 l28,0 l-14,-28 z" vector-effect="non-scaling-stroke" />
         </g>
       ) : type == "writing" ? (
         <g>
-          <circle cx="14" cy="14" r="14" />
+          <circle cx="14" cy="14" r="14" vector-effect="non-scaling-stroke" />
         </g>
       ) : (
         ""

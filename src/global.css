@@ -7,24 +7,30 @@
 }
 
 :root {
-  /* --space-xs: 0.125rem;
-  --space-s: 0.25rem;
-  --space-m: 0.5rem;
-  --space-l: 1rem;
-  --space-xl: 2rem;
-  --space-2xl: 4rem; */
-}
-
-:root {
-  --hue: 35;
-  --col-blk: var(--hue) 50% 15%;
-  --col-wht: var(--hue) 10% 98.5%;
-
-  --col-prim: var(--hue) 75% 60%;
-  --col-second: calc(var(--hue) * var(--step, 2)) 75% 60%;
-
-  color: hsl(var(--col-blk));
   background-color: hsl(var(--col-wht));
+  color: hsl(var(--col-blk));
+  --hue: 45;
+  --hue-offset: 30;
+  --offset-mult: 1.75;
+
+  --col-blk: calc(var(--hue)) 30% 20%;
+  --col-wht: calc(var(--hue)) 20% 97.5%;
+
+  --col-prim: var(--hue) 95% 55%;
+  --col-second: calc(var(--hue) + (var(--hue-offset))) 90% 60%;
+  --col-ternary: calc(var(--hue) + (var(--hue-offset) * var(--offset-mult))) 85%
+    45%;
+}
+:root.dark {
+  --hue: 220;
+  --hue-offset: 90;
+  --offset-mult: 1.75;
+  --col-blk: calc(var(--hue)) 10% 75%;
+  --col-wht: calc(var(--hue)) 5% 15%;
+  --col-prim: var(--hue) 50% 60%;
+  --col-second: calc(var(--hue) + (var(--hue-offset))) 30% 60%;
+  --col-ternary: calc(var(--hue) + (var(--hue-offset) * var(--offset-mult))) 60%
+    50%;
 }
 
 :root {
@@ -92,10 +98,10 @@ body {
 h1 {
   font-size: var(--step-5);
 }
-h2{
+h2 {
   font-size: var(--step-3);
 }
-p{
+p {
   font-size: var(--step-0);
 }
 

@@ -9,19 +9,18 @@ export interface Props {
   links: link[];
 }
 
+const isCurrent = (url: string) => Astro.url.pathname === url;
+
 const { links } = Astro.props as Props;
 ---
 
 <m-nav>
   <ul>
     {
-      links.map(link => (
-        <li
-          data-path={link.url}
-          data-current={Astro.url.pathname === link.url ? "true" : null}
-        >
-          <a href={link.url}>
-            <Icons width={20} height={20} type={link.name.toLowerCase()} />
+      links.map(({ name, url }) => (
+        <li data-path={url} data-current={isCurrent(url) ? "true" : null}>
+          <a href={url}>
+            <Icons width={28} height={28} type={name.toLowerCase()} />
           </a>
         </li>
       ))
@@ -35,7 +34,7 @@ const { links } = Astro.props as Props;
     --h: 0.5;
   }
   :global(html.is-animating-out) m-nav {
-    --h: 0.25;
+    --h: 0.5;
   }
   m-nav {
     isolation: isolate;
@@ -48,15 +47,16 @@ const { links } = Astro.props as Props;
     width: max-content;
     height: max-content;
 
-    --o: 0.85;
+    --o: 0.5;
     background-color: hsl(var(--col-wht) / var(--o));
+    /* background-color: #ddd9 !important; */
     opacity: 0.75;
 
     border-radius: var(--space-3xs);
     padding: var(--space-3xs);
     align-items: center;
 
-    box-shadow: 0 0 var(--space-s) hsl(var(--col-blk) / 0.1);
+    box-shadow: 0 0 10px hsl(var(--col-blk) / 0.1);
   }
   m-nav:hover {
     transition-delay: 100ms;
@@ -65,19 +65,22 @@ const { links } = Astro.props as Props;
   }
   ul {
     display: flex;
-    gap: var(--space-2xs);
+    /* gap: var(--space-2xs); */
     align-items: center;
   }
   li {
-    padding: var(--space-3xs);
+    /* stroke-dasharray: 2 4; */
+    stroke-width: 1.5;
+    /* padding: var(--space-3xs); */
+    /* padding: 4px; */
     position: relative;
-    transition-property: color;
+    transition-property: color, stroke-width;
     transition-duration: 200ms;
-    transition-delay: 150ms;
-    font-weight: 1000;
+    /* transition-delay: 150ms; */
+    /* font-weight: 1000; */
   }
   li::after {
-    z-index: -1;
+    /* z-index: -1;
     transition-property: transform;
     transition-duration: 200ms;
     content: "";
@@ -88,17 +91,26 @@ const { links } = Astro.props as Props;
     height: 100%;
     transform-origin: bottom;
     transform: scaleY(0);
-    background-color: hsl(var(--col-blk));
-    border-radius: var(--space-3xs);
+    background-color: hsl(var(--col-ternary));
+    border-radius: var(--space-3xs); */
   }
+  :global(html.is-animating-out) li::after {
+    transition-duration: 200ms;
+  }
+
   :global(html.is-fetching) li::after {
     transition-duration: 2500ms;
   }
+  li:hover {
+    stroke-width: 2.5;
+  }
   li[data-current="true"] {
-    color: hsl(var(--col-prim));
+    color: hsl(var(--col-ternary));
+    stroke-width: 2.5;
   }
   li[data-current="true"]::after {
-    transform: scaleY(var(--h, 1));
+    opacity: 1;
+    /* transform: scale(var(--h, 1)); */
   }
 </style>
 
@@ -107,10 +119,6 @@ const { links } = Astro.props as Props;
     "m-nav",
     class customElement extends HTMLElement {
       links: NodeListOf<HTMLLIElement>;
-      state: {
-        currentLink: string | null;
-      };
-      currentLinkEl: HTMLLIElement;
 
       static get observedAttributes() {
         return [];
@@ -118,24 +126,19 @@ const { links } = Astro.props as Props;
       constructor() {
         super();
 
-        // state
-        this.state = {
-          currentLink: location.pathname,
-        };
         this.links = this.querySelectorAll("ul li");
-        this.currentLinkEl = this.querySelector("ul li[data-current]");
         // listners
         document.addEventListener("navigating-done", () => {
-          this.state.currentLink = location.pathname;
           this.updateLinks();
         });
       }
 
       updateLinks() {
+        const currentLink = location.pathname;
         this.links.forEach(link => {
-          if (link.dataset.path === this.state.currentLink) {
+          if (link.dataset.path === currentLink) {
             link.dataset.current = "true";
-            this.currentLinkEl = link;
+            // this.currentLinkEl = link;
           } else {
             delete link.dataset.current;
           }

@@ -2,9 +2,10 @@
 import Layout from "../layouts/Layout.astro";
 
 const content = [
+  "hr",
+  "br",
   "Designing Engineering",
   "br",
-  "",
   "&&",
   "Information Designing",
   "br",
@@ -25,33 +26,36 @@ const content = [
   </svg>
   <h2>
     {
-      content.map((row, i) =>
-        row === "hr" ? (
-          <Fragment set:html={`<hr />`} />
-        ) : row === "br" ? (
-          <Fragment set:html={"<br />"} />
-        ) : row === "&&" ? (
-          <>
-            <div class="overflow" style={`--i:${i}`}>
-              <strong>{row}</strong>
-            </div>
-          </>
-        ) : (
+      content.map((row, i) => {
+        if (row === "br") {
+          return <br />;
+        }
+        return (
           <div class="overflow" style={`--i:${i}`}>
-            <span>{row}</span>
+            {() => {
+              switch (row) {
+                case "&&":
+                  return <strong>&&</strong>;
+                case "hr":
+                  return <hr />;
+                default:
+                  return <span>{row}</span>;
+              }
+            }}
           </div>
-        )
-      )
+        );
+      })
     }
   </h2>
 </Layout>
+<!-- {row !== "&&" ? <span>{row}</span> : <strong>{row}</strong>} -->
 <style>
   @keyframes enter {
     from {
-      transform: translateY(100%);
+      transform: translate(var(--x, 0%), var(--y, 0%));
     }
     to {
-      transform: translateY(0);
+      transform: translate(0, 0);
     }
   }
   h2 {
@@ -62,29 +66,48 @@ const content = [
     grid-column-start: 1;
     grid-column-end: 13;
   }
+  :global(html[data-new-visit="true"]) :is(span, strong) {
+  }
   span,
-  strong {
-    display: inline-block;
+  strong,
+  hr {
+    /* margin-inline-end: 1ch; */
     animation-name: enter;
+    display: inline-block;
     animation-duration: 400ms;
     animation-fill-mode: both;
-    animation-delay: calc(200ms + 90ms * var(--i));
-    /* animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1.5); */
-    animation-timing-function: cubic-bezier(1, 0.22, 0, 1.42);
+    animation-delay: calc(200ms + 90ms * var(--i) + var(--offset, 0ms));
+    animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1.5);
+    /* animation-timing-function: cubic-bezier(1, 0.22, 0, 1.42); */
+  }
+  span,
+  strong {
+    --y: 100%;
+  }
+  hr {
+    --x: -100%;
+    /* --offset: 750ms; */
   }
   .overflow {
-    padding-top: 4px;
+    margin-inline-end: 1ch;
+    /* padding-top: 4px; */
     display: inline-block;
+    /* white-space: pre-line; */
     line-height: 1;
-    overflow: clip;
+    overflow: hidden;
+    outline: 1px currentColor dashed;
+    padding: 2px;
   }
-  :global(hr) {
-    width: 20%;
-    margin-inline: auto;
-    border-color: hsl(var(--col-prim));
-    border-style: solid;
-    border-width: var(--space-m);
-    margin-block: var(--space-m);
+  hr {
+    display: block;
+    width: var(--space-3xl);
+    /* margin-inline: auto; */
+    /* border-color: hsl(var(--col-prim)); */
+    border-style: none;
+    height: var(--space-s);
+    background-color: hsl(var(--col-prim));
+    /* border-width: var(--space-2xs); */
+    /* margin-block: var(--space-3xs); */
   }
 
   svg {
@@ -101,7 +124,7 @@ const content = [
       grid-column-start: 2;
     }
     :global(hr) {
-      margin-inline: auto;
+      margin-inline: 0;
     }
     svg {
       grid-column: -7 / -1;

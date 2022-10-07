@@ -3,6 +3,8 @@ import "../global.css";
 
 import Nav, { link } from "../components/Nav.astro";
 import Transition from "../components/Transition.astro";
+import GridLines from "../components/GridLines.astro";
+import Grain from "../components/Grain.astro";
 
 export interface Props {
   title: string;
@@ -37,6 +39,7 @@ const { title, pageOrder } = Astro.props as Props;
     <title>{title}</title>
   </head>
   <body data-page-order={pageOrder !== undefined ? pageOrder : -1}>
+    <GridLines patternSize={16} sWidth={0.1} />
     <Nav links={links} />
     <Transition
       easing="cubic-bezier(0.8,-0.5,0.9,0.9)"
@@ -47,6 +50,7 @@ const { title, pageOrder } = Astro.props as Props;
         <slot />
       </main>
     </Transition>
+    <Grain />
     <script>
       import "../scripts/rooter";
     </script>
@@ -62,6 +66,13 @@ const { title, pageOrder } = Astro.props as Props;
     border: 2px hsl(var(--col-blk) / 0.05) solid;
     box-shadow: 0 0 16px 0 inset hsl(var(--col-prim) / 0.2);
     display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+  body > :global(#gridlines) {
+    grid-row: 1/-1;
+    grid-column: 1/-1;
+    z-index: -1;
   }
   :global(m-nav) {
     grid-row: 1;
@@ -75,8 +86,8 @@ const { title, pageOrder } = Astro.props as Props;
 
     height: 100%;
 
-    grid-row: 1/3;
-    grid-column: 1/3;
+    grid-row: 1/4;
+    grid-column: 1/4;
 
     overflow-y: scroll;
 
