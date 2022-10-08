@@ -1,24 +1,13 @@
 ---
 import FilterList from "../../components/FilterList.astro";
 import Layout from "../../layouts/Layout.astro";
+
+const posts = (await Astro.glob("./*.astro")).map(({ url, title }) => ({
+  title,
+  url,
+}));
 ---
 
-<Layout title="The Portal" pageOrder={1}>
-  <FilterList
-    list={[
-      "Yes",
-      "Cool",
-      "Bool",
-      "Mama",
-      "Yaas",
-      "Cat",
-      "Dog",
-      "God",
-      "Stuff",
-      "Me",
-      "You",
-      "This",
-      "That",
-    ]}
-  />
+<Layout title="Portal" pageOrder={1}>
+  <FilterList list={posts} />
 </Layout>

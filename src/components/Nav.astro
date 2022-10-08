@@ -30,7 +30,7 @@ const { links } = Astro.props as Props;
 
 <style>
   :global(html.is-fetching) m-nav {
-    background-color: yellow;
+    /* background-color: yellow; */
     --h: 0.5;
   }
   :global(html.is-animating-out) m-nav {
@@ -65,7 +65,8 @@ const { links } = Astro.props as Props;
   }
   ul {
     display: flex;
-    /* gap: var(--space-2xs); */
+    padding: var(--space-3xs);
+    gap: var(--space-3xs);
     align-items: center;
   }
   li {
@@ -80,9 +81,10 @@ const { links } = Astro.props as Props;
     /* font-weight: 1000; */
   }
   li::after {
-    /* z-index: -1;
+    z-index: -1;
     transition-property: transform;
     transition-duration: 200ms;
+    transition-delay: 0ms;
     content: "";
     position: absolute;
     left: 0;
@@ -91,8 +93,13 @@ const { links } = Astro.props as Props;
     height: 100%;
     transform-origin: bottom;
     transform: scaleY(0);
-    background-color: hsl(var(--col-ternary));
-    border-radius: var(--space-3xs); */
+    /* background-color: hsl(var(--col-prim)); */
+    border-color: currentColor;
+    border-left-width: 2px;
+    border-right-width: 2px;
+    border-left-style: solid;
+    border-right-style: solid;
+    /* border-radius: var(--space-3xs); */
   }
   :global(html.is-animating-out) li::after {
     transition-duration: 200ms;
@@ -100,6 +107,8 @@ const { links } = Astro.props as Props;
 
   :global(html.is-fetching) li::after {
     transition-duration: 2500ms;
+    /* border-left-style: dashed;
+    border-right-style: dashed; */
   }
   li:hover {
     stroke-width: 2.5;
@@ -110,7 +119,7 @@ const { links } = Astro.props as Props;
   }
   li[data-current="true"]::after {
     opacity: 1;
-    /* transform: scale(var(--h, 1)); */
+    transform: scale(1, var(--h, 1));
   }
 </style>
 
@@ -118,7 +127,7 @@ const { links } = Astro.props as Props;
   customElements.define(
     "m-nav",
     class customElement extends HTMLElement {
-      links: NodeListOf<HTMLLIElement>;
+      // links: NodeListOf<HTMLLIElement>;
 
       static get observedAttributes() {
         return [];

@@ -12,10 +12,10 @@ const { list } = Astro.props as Props;
   <input type="text" />
   <ul>
     {
-      list.map(item => {
+      list.map(({ title, url }, i) => {
         return (
-          <li data-key={item}>
-            <Card title={item} link="/">
+          <li data-key={title} data-index={i} style={`--i:${i}`}>
+            <Card title={title} link={url}>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus
               aliquam tempora fugiat quam odio? Alias, recusandae?
             </Card>
@@ -28,24 +28,24 @@ const { list } = Astro.props as Props;
 
 <style>
   filter-list {
-    
     display: block;
     /* width: max-content; */
     padding: var(--space-3xs);
-    /* border: 1px black solid; */
+    border: 1px black solid;
     display: flex;
     flex-direction: column;
     gap: var(--space-3xs);
   }
   ul {
-    /* border: 1px black dashed; */
+    flex-grow: 1;
+    border: 1px black dashed;
     overflow-y: scroll;
     padding: var(--space-3xs);
   }
   li {
     transition-property: transform;
-    transition-delay: 100ms;
-    transition-duration: 100ms;
+    transition-delay: calc(25ms + var(--i) * 25ms);
+    transition-duration: calc(50ms + var(--i) * 25ms);
     transition-timing-function: ease-in-out;
     padding: var(--space-3xs);
     border-radius: 2px;
@@ -62,8 +62,6 @@ const { list } = Astro.props as Props;
   customElements.define(
     "filter-list",
     class customElement extends HTMLElement {
-      input: HTMLInputElement;
-      items: NodeListOf<HTMLLIElement>;
       static get observedAttributes() {
         return [];
       }
@@ -111,9 +109,12 @@ const { list } = Astro.props as Props;
           });
         });
       }
-      connectedCallback() {}
+      connectedCallback() {
+        console.log("hellooo");
+      }
       diconnectedCallback() {}
       attributeChangedCallback(name, oldValue, newValue) {}
     }
   );
+  // import "./FilterList";
 </script>
