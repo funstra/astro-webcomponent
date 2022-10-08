@@ -63,6 +63,20 @@ const { title, pageOrder } = Astro.props as Props;
     <style>
       html {
         padding: var(--space-3xs);
+        transition-property: padding;
+        transition-duration: 2000ms;
+        transition-delay: 100ms;
+      }
+      :global(html.is-fetching) {
+        padding: var(--space-2xs);
+      }
+      :global(html.is-fetching main > *) {
+        opacity: 0.5;
+      }
+      main > :global(*) {
+        transition-property: opacity;
+        transition-duration: 2000ms;
+        transition-delay: 100ms;
       }
       body {
         border-radius: var(--space-3xs);

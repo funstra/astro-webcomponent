@@ -65,8 +65,8 @@ const { links } = Astro.props as Props;
   }
   ul {
     display: flex;
-    padding: var(--space-3xs);
-    gap: var(--space-3xs);
+    padding: calc(var(--space-3xs) / 2);
+    gap: calc(var(--space-3xs) / 2);
     align-items: center;
   }
   li {
@@ -76,6 +76,8 @@ const { links } = Astro.props as Props;
     /* padding: 4px; */
     position: relative;
     transition-property: color, stroke-width;
+    /* transition-delay: 0ms, 0ms, 100ms; */
+    stroke-dasharray: 0;
     transition-duration: 200ms;
     /* transition-delay: 150ms; */
     /* font-weight: 1000; */
@@ -104,7 +106,9 @@ const { links } = Astro.props as Props;
   :global(html.is-animating-out) li::after {
     transition-duration: 200ms;
   }
-
+  :global(html.is-fetching) li[data-current="true"] {
+    /* stroke-dasharray: 2; */
+  }
   :global(html.is-fetching) li::after {
     transition-duration: 2500ms;
     /* border-left-style: dashed;
@@ -116,6 +120,8 @@ const { links } = Astro.props as Props;
   li[data-current="true"] {
     color: hsl(var(--col-ternary));
     stroke-width: 2.5;
+    /* stroke-linecap: butt; */
+    /* stroke-dasharray: 2; */
   }
   li[data-current="true"]::after {
     opacity: 1;
